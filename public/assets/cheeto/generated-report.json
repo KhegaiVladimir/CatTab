@@ -1,0 +1,119 @@
+{
+  "generatedAt": "2026-04-29T20:57:54.496Z",
+  "report": [
+    {
+      "file": "walk_north.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "walk_south.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "walk_east.png",
+      "frameCount": 10,
+      "sourceFrames": 10,
+      "mode": "from-source"
+    },
+    {
+      "file": "walk_west.png",
+      "frameCount": 10,
+      "sourceFrames": 10,
+      "mode": "from-source"
+    },
+    {
+      "file": "walk_north_east.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "walk_north_west.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "walk_south_east.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "walk_south_west.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "idle_calm.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "idle_exciting.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "eat_south.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "sleep.png",
+      "frameCount": 8,
+      "sourceFrames": 8,
+      "mode": "from-source"
+    },
+    {
+      "file": "sleep_loop.png",
+      "frameCount": 16,
+      "sourceFrames": 16,
+      "mode": "from-source"
+    },
+    {
+      "file": "sit.png",
+      "frameCount": 8,
+      "sourceFrames": 8,
+      "mode": "from-source"
+    },
+    {
+      "file": "sit_transition.png",
+      "frameCount": 9,
+      "sourceFrames": 9,
+      "mode": "from-source"
+    },
+    {
+      "file": "react_happy.png",
+      "frameCount": 9,
+      "sourceFrames": 9,
+      "mode": "from-source"
+    },
+    {
+      "file": "cat_playing.png",
+      "frameCount": 16,
+      "sourceFrames": 16,
+      "mode": "from-source"
+    },
+    {
+      "file": "fish.png",
+      "frameCount": 1,
+      "sourceFrames": 1,
+      "mode": "from-source"
+    },
+    {
+      "file": "base.png",
+      "frameCount": 1,
+      "sourceFrames": 1,
+      "mode": "from-source"
+    }
+  ]
+}

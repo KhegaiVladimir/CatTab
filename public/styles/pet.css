@@ -1,0 +1,70 @@
+/* Scoped inside Shadow DOM — no host page leakage */
+
+#cattab-pet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 92px;
+  height: 92px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background-repeat: no-repeat;
+  background-size: 92px 92px; /* overridden per animation */
+  pointer-events: auto;
+  cursor: pointer;
+  /* GPU compositing hint */
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+#cattab-pet:hover {
+  filter: brightness(1.1);
+}
+
+/* ── Food sprite ─────────────────────────────────────────────────────────── */
+
+.cattab-food {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  font-size: 28px;
+  line-height: 36px;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  animation: cattab-food-bob 1s ease-in-out infinite alternate;
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.cattab-food--eaten {
+  animation: cattab-food-eat 0.4s ease-out forwards;
+}
+
+@keyframes cattab-food-bob {
+  from { transform: translateY(0px) scale(1); }
+  to   { transform: translateY(-6px) scale(1.08); }
+}
+
+@keyframes cattab-food-eat {
+  0%   { transform: scale(1);   opacity: 1; }
+  50%  { transform: scale(1.4); opacity: 0.8; }
+  100% { transform: scale(0);   opacity: 0; }
+}
+
+/* ── Heart reaction ──────────────────────────────────────────────────────── */
+
+.cattab-heart {
+  position: absolute;
+  font-size: 18px;
+  pointer-events: none;
+  user-select: none;
+  animation: cattab-heart-rise 0.85s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes cattab-heart-rise {
+  0%   { transform: translateY(0px)   scale(1);    opacity: 1; }
+  60%  { transform: translateY(-28px) scale(1.2);  opacity: 1; }
+  100% { transform: translateY(-48px) scale(0.8);  opacity: 0; }
+}

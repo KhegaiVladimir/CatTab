@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cattab</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="ct-popup">
+
+    <!-- One-time compatibility warning -->
+    <div class="ct-compat-warn" id="compat-warn" hidden>
+      <div class="ct-compat-warn__icon">⚠️</div>
+      <div class="ct-compat-warn__body">
+        <div class="ct-compat-warn__title">Works on most sites</div>
+        <div class="ct-compat-warn__text">Chrome blocks extensions on a few pages — Google Search, the New Tab page, Chrome settings, and similar. Cheeto won't appear there, but works everywhere else.</div>
+      </div>
+      <button class="ct-compat-warn__close" id="compat-warn-close" type="button" aria-label="Dismiss">✕</button>
+    </div>
+
+    <!-- Header -->
+    <div class="ct-header">
+      <div class="ct-name-row">
+        <div class="ct-name-badge" aria-hidden="true">🐾</div>
+        <div class="ct-name-stack">
+          <div class="ct-name">Cheeto</div>
+          <div class="ct-mood" id="portrait-status">Idle</div>
+        </div>
+      </div>
+      <div class="ct-level">Lv 1</div>
+    </div>
+
+    <!-- Cat stage (live sprite) -->
+    <div class="ct-stage">
+      <div class="ct-stage-bg"></div>
+      <div class="ct-cat-wrap">
+        <div id="pet-portrait" aria-hidden="true"></div>
+        <div class="ct-cat-shadow"></div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="ct-stats">
+      <div class="ct-stat">
+        <div class="ct-stat-label" data-i18n="popupHunger">Hunger</div>
+        <div class="ct-stat-track"><div class="ct-stat-fill" id="bar-hunger" style="background:#E89464"></div></div>
+        <div class="ct-stat-value" id="val-hunger">—</div>
+      </div>
+      <div class="ct-stat">
+        <div class="ct-stat-label" data-i18n="popupHappiness">Happiness</div>
+        <div class="ct-stat-track"><div class="ct-stat-fill" id="bar-happiness" style="background:#E8A0B5"></div></div>
+        <div class="ct-stat-value" id="val-happiness">—</div>
+      </div>
+      <div class="ct-stat">
+        <div class="ct-stat-label" data-i18n="popupEnergy">Energy</div>
+        <div class="ct-stat-track"><div class="ct-stat-fill" id="bar-energy" style="background:#E8C766"></div></div>
+        <div class="ct-stat-value" id="val-energy">—</div>
+      </div>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="ct-actions">
+      <button id="btn-feed" class="ct-btn ct-btn--orange" type="button">
+        <span class="ct-btn-icon">🍖</span>
+        <span data-i18n="popupFeed">Feed</span>
+      </button>
+      <button id="btn-play" class="ct-btn ct-btn--pink" type="button">
+        <span class="ct-btn-icon">🎾</span>
+        <span data-i18n="popupPlay">Play</span>
+      </button>
+    </div>
+
+    <div class="ct-divider"></div>
+
+    <!-- Behavior mode -->
+    <section class="ct-mode">
+      <span class="ct-mode-label" data-i18n="popupModeLabel">Behavior</span>
+      <div class="segmented" role="radiogroup" aria-label="Pet behavior mode">
+        <button type="button" class="segmented__btn" data-mode="auto"   data-i18n="popupModeAuto"  >Auto</button>
+        <button type="button" class="segmented__btn" data-mode="follow" data-i18n="popupModeFollow">Follow</button>
+        <button type="button" class="segmented__btn" data-mode="wander" data-i18n="popupModeWander">Wander</button>
+      </div>
+    </section>
+
+    <div class="ct-divider"></div>
+
+    <!-- Footer toggle + settings -->
+    <div class="ct-footer">
+      <div class="ct-toggle-row">
+        <div class="ct-toggle-label">
+          <div class="ct-toggle-title" data-i18n="popupHideOnSite">Show on this site</div>
+          <div class="ct-toggle-sub" id="current-hostname">—</div>
+        </div>
+        <label class="ct-toggle">
+          <input type="checkbox" id="hide-toggle" />
+          <span class="ct-toggle-thumb"></span>
+        </label>
+      </div>
+    </div>
+
+  </div>
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

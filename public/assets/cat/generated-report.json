@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-04-24T08:55:35.448Z",
+  "report": [
+    {
+      "file": "base_south.png",
+      "frameCount": 1,
+      "sourceFrames": 1,
+      "mode": "from-source"
+    },
+    {
+      "file": "idle_south.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "walk_south.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "walk_east.png",
+      "frameCount": 6,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "walk_north.png",
+      "frameCount": 6,
+      "sourceFrames": 1,
+      "mode": "from-source"
+    },
+    {
+      "file": "eat_south.png",
+      "frameCount": 8,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    },
+    {
+      "file": "sleep_south.png",
+      "frameCount": 4,
+      "sourceFrames": 6,
+      "mode": "from-source"
+    }
+  ]
+}

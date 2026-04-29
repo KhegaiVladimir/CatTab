@@ -1,0 +1,210 @@
+/* Scoped inside Shadow DOM — no host page leakage */
+
+#cattab-pet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 92px;
+  height: 92px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background-repeat: no-repeat;
+  background-size: 92px 92px; /* overridden per animation */
+  pointer-events: auto;
+  cursor: pointer;
+  /* GPU compositing hint */
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 0.1s ease;
+}
+
+#cattab-pet:hover {
+  filter: brightness(1.1);
+}
+
+/* ── Food sprite ─────────────────────────────────────────────────────────── */
+
+.cattab-food {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  font-size: 28px;
+  line-height: 36px;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  animation: cattab-food-bob 1s ease-in-out infinite alternate;
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.cattab-food--eaten {
+  animation: cattab-food-eat 0.4s ease-out forwards;
+}
+
+@keyframes cattab-food-bob {
+  from { transform: translateY(0px) scale(1); }
+  to   { transform: translateY(-6px) scale(1.08); }
+}
+
+@keyframes cattab-food-eat {
+  0%   { transform: scale(1);   opacity: 1; }
+  50%  { transform: scale(1.4); opacity: 0.8; }
+  100% { transform: scale(0);   opacity: 0; }
+}
+
+/* ── Heart reaction ──────────────────────────────────────────────────────── */
+
+.cattab-heart {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  user-select: none;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  /* fallback text (emoji) when sprite URL not set */
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  animation: cattab-heart-rise 0.85s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes cattab-heart-rise {
+  0%   { transform: translateY(0px)   scale(1);    opacity: 1; }
+  60%  { transform: translateY(-28px) scale(1.2);  opacity: 1; }
+  100% { transform: translateY(-48px) scale(0.8);  opacity: 0; }
+}
+
+
+/* ── Emotion bubbles ─────────────────────────────────────────────────────── */
+
+.cattab-bubble {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  pointer-events: none;
+  user-select: none;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  will-change: transform, opacity;
+  animation: cattab-bubble-life 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.18));
+}
+
+@keyframes cattab-bubble-life {
+  0%   { opacity: 0;   transform: translateY(6px)   scale(0.6); }
+  12%  { opacity: 1;   transform: translateY(-6px)  scale(1.08); }
+  22%  { opacity: 1;   transform: translateY(-10px) scale(1); }
+  50%  { opacity: 1;   transform: translateY(-14px) scale(1.03); }
+  65%  { opacity: 1;   transform: translateY(-12px) scale(1); }
+  80%  { opacity: 0.8; transform: translateY(-16px) scale(0.97); }
+  100% { opacity: 0;   transform: translateY(-22px) scale(0.85); }
+}
+
+/* ── Right-click action menu ─────────────────────────────────────────────── */
+
+.cattab-menu {
+  position: fixed;
+  background: rgba(255, 248, 240, 0.97);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  color: #2A2520;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 20px 60px rgba(42, 37, 32, 0.22),
+    0 4px 16px rgba(42, 37, 32, 0.10),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  padding: 12px;
+  pointer-events: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  user-select: none;
+  z-index: 2147483647;
+  animation: cattab-menu-pop 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: bottom center;
+}
+
+@media (prefers-color-scheme: dark) {
+  .cattab-menu {
+    background: rgba(40, 35, 30, 0.95);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.5),
+      0 4px 16px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    color: #FFF8F0;
+  }
+}
+
+.cattab-menu__grid {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  min-width: 160px;
+}
+
+.cattab-menu__divider {
+  height: 1px;
+  background: rgba(232, 148, 100, 0.2);
+  margin: 4px 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .cattab-menu__divider { background: rgba(255,255,255,0.08); }
+}
+
+.cattab-menu__item {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: inherit;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  height: 36px;
+  width: 100%;
+  text-align: left;
+  transition: background 0.1s ease;
+}
+
+.cattab-menu__item:hover,
+.cattab-menu__item:focus-visible {
+  background: rgba(244, 162, 97, 0.14);
+  outline: none;
+}
+
+.cattab-menu__item:active {
+  background: rgba(244, 162, 97, 0.25);
+}
+
+.cattab-menu__icon {
+  font-size: 15px;
+  line-height: 1;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.cattab-menu__label {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex: 1;
+}
+
+@keyframes cattab-menu-pop {
+  from { opacity: 0; transform: scale(0.82) translateY(10px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}

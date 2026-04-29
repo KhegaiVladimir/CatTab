@@ -1,0 +1,98 @@
+{
+  "extensionName": {
+    "message": "Cattab",
+    "description": "Extension name"
+  },
+  "extensionDescription": {
+    "message": "Your pixel art cat companion that lives on every webpage",
+    "description": "Extension description"
+  },
+  "feedCatHere": {
+    "message": "Feed cat here 🐟",
+    "description": "Context menu item"
+  },
+  "popupHunger": {
+    "message": "Hunger",
+    "description": "Stat label"
+  },
+  "popupHappiness": {
+    "message": "Happiness",
+    "description": "Stat label"
+  },
+  "popupEnergy": {
+    "message": "Energy",
+    "description": "Stat label"
+  },
+  "popupFeed": {
+    "message": "Feed",
+    "description": "Popup feed button"
+  },
+  "popupPlay": {
+    "message": "Play",
+    "description": "Popup play button"
+  },
+  "popupSettings": {
+    "message": "Settings",
+    "description": "Popup settings link"
+  },
+  "popupHideOnSite": {
+    "message": "Hide on this site",
+    "description": "Toggle label in popup"
+  },
+  "popupModeLabel": {
+    "message": "Behavior",
+    "description": "Pet mode section label"
+  },
+  "popupModeAuto": {
+    "message": "Auto",
+    "description": "Mode: follow when close, wander when far (default)"
+  },
+  "popupModeFollow": {
+    "message": "Follow",
+    "description": "Mode: follow cursor only"
+  },
+  "popupModeWander": {
+    "message": "Wander",
+    "description": "Mode: walk on its own only"
+  },
+  "actionSleep": {
+    "message": "Sleep",
+    "description": "Right-click pet menu: put cat to sleep"
+  },
+  "actionWake": {
+    "message": "Wake up",
+    "description": "Right-click pet menu: wake sleeping cat"
+  },
+  "actionPlay": {
+    "message": "Play",
+    "description": "Right-click pet menu: play with cat (big happiness boost)"
+  },
+  "actionHide": {
+    "message": "Hide here",
+    "description": "Right-click pet menu: hide cat on this site"
+  },
+  "optionsTitle": {
+    "message": "Cattab Settings",
+    "description": "Options page title"
+  },
+  "optionsBlocklist": {
+    "message": "Hidden sites",
+    "description": "Blocklist section heading"
+  },
+  "optionsSpeed": {
+    "message": "Cat speed",
+    "description": "Speed slider label"
+  },
+  "optionsSound": {
+    "message": "Sound effects",
+    "description": "Sound toggle label"
+  },
+  "optionsAddSite": {
+    "message": "Add site",
+    "description": "Button label"
+  },
+  "optionsRemove": {
+    "message": "Remove",
+    "description": "Remove button label"
+  }
+}

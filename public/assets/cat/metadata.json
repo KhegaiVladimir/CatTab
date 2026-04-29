@@ -1,0 +1,75 @@
+{
+  "character": {
+    "id": "ff09c873-fb6c-43c5-b0b5-65839115857a",
+    "name": "cute orange tabby cat, cozy Stardew Valley style, warm colors, big round head small body, friendly closed-eye smile, soft pillowy proportions, side view, idle standing pose, clean pixel art, 4-color palette, dark outline",
+    "prompt": "cute orange tabby cat, cozy Stardew Valley style, warm colors, big round head small body, friendly closed-eye smile, soft pillowy proportions, side view, idle standing pose, clean pixel art, 4-color palette, dark outline",
+    "size": {
+      "width": 92,
+      "height": 92
+    },
+    "template_id": "cat",
+    "directions": 4,
+    "view": "side",
+    "created_at": "2026-04-23T06:23:01.900162+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "orange_tabby_cat_walking_forward_on_all_four_legs-282922ca": {
+        "south": [
+          "animations/orange_tabby_cat_walking_forward_on_all_four_legs-282922ca/south/frame_000.png",
+          "animations/orange_tabby_cat_walking_forward_on_all_four_legs-282922ca/south/frame_001.png",
+          "animations/orange_tabby_cat_walking_forward_on_all_four_legs-282922ca/south/frame_002.png",
+          "animations/orange_tabby_cat_walking_forward_on_all_four_legs-282922ca/south/frame_003.png",
+          "animations/orange_tabby_cat_walking_forward_on_all_four_legs-282922ca/south/frame_004.png",
+          "animations/orange_tabby_cat_walking_forward_on_all_four_legs-282922ca/south/frame_005.png"
+        ]
+      },
+      "orange_tabby_cat_eating_viewed_from_the_side_in_ho-0c90bec9": {
+        "south": [
+          "animations/orange_tabby_cat_eating_viewed_from_the_side_in_ho-0c90bec9/south/frame_000.png",
+          "animations/orange_tabby_cat_eating_viewed_from_the_side_in_ho-0c90bec9/south/frame_001.png",
+          "animations/orange_tabby_cat_eating_viewed_from_the_side_in_ho-0c90bec9/south/frame_002.png",
+          "animations/orange_tabby_cat_eating_viewed_from_the_side_in_ho-0c90bec9/south/frame_003.png",
+          "animations/orange_tabby_cat_eating_viewed_from_the_side_in_ho-0c90bec9/south/frame_004.png",
+          "animations/orange_tabby_cat_eating_viewed_from_the_side_in_ho-0c90bec9/south/frame_005.png"
+        ]
+      },
+      "orange_tabby_cat_sitting_upright_in_calm_idle_pose-9a0e9cbb": {
+        "south": [
+          "animations/orange_tabby_cat_sitting_upright_in_calm_idle_pose-9a0e9cbb/south/frame_000.png",
+          "animations/orange_tabby_cat_sitting_upright_in_calm_idle_pose-9a0e9cbb/south/frame_001.png",
+          "animations/orange_tabby_cat_sitting_upright_in_calm_idle_pose-9a0e9cbb/south/frame_002.png",
+          "animations/orange_tabby_cat_sitting_upright_in_calm_idle_pose-9a0e9cbb/south/frame_003.png",
+          "animations/orange_tabby_cat_sitting_upright_in_calm_idle_pose-9a0e9cbb/south/frame_004.png",
+          "animations/orange_tabby_cat_sitting_upright_in_calm_idle_pose-9a0e9cbb/south/frame_005.png"
+        ]
+      },
+      "walking_forward_all_four_legs_clearly_visible_and-2aa4bc69": {
+        "east": [
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/east/frame_000.png",
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/east/frame_001.png",
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/east/frame_002.png",
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/east/frame_003.png",
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/east/frame_004.png",
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/east/frame_005.png"
+        ],
+        "west": [
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/west/frame_000.png",
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/west/frame_001.png",
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/west/frame_002.png",
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/west/frame_003.png",
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/west/frame_004.png",
+          "animations/walking_forward_all_four_legs_clearly_visible_and-2aa4bc69/west/frame_005.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-04-24T03:51:09.508626"
+}
