@@ -55,7 +55,8 @@ export class PetRenderer {
    * Call once per RAF tick.
    */
   tick(timestamp: number, config: AnimationConfig, spriteBaseUrl: string): void {
-    const delta = this.lastTimestamp === 0 ? 0 : timestamp - this.lastTimestamp;
+    const raw = this.lastTimestamp === 0 ? 0 : timestamp - this.lastTimestamp;
+    const delta = Math.min(raw, 100); // cap delta so tab-switch resume doesn't fire dozens of frames at once
     this.lastTimestamp = timestamp;
 
     // Swap sprite sheet if behavior/direction changed
@@ -149,11 +150,14 @@ export class PetRenderer {
 
     const BUBBLE_SIZE = 44;
     const GAP = 4;
+    // Prefer above the cat; flip below if not enough room at the top
+    const topAbove = catY - BUBBLE_SIZE - GAP;
+    const bubbleTop = topAbove >= 0 ? topAbove : catY + PET_SIZE + GAP;
     const bubble = document.createElement('div');
     bubble.className = 'cattab-bubble';
     bubble.style.backgroundImage = `url("${imgUrl}")`;
     bubble.style.left = `${catX + PET_SIZE / 2 - BUBBLE_SIZE / 2}px`;
-    bubble.style.top = `${catY - BUBBLE_SIZE - GAP}px`;
+    bubble.style.top = `${bubbleTop}px`;
     this.shadowRoot.appendChild(bubble);
     setTimeout(() => bubble.remove(), 2850);
   }

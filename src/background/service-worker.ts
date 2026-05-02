@@ -5,6 +5,7 @@ import {
   HUNGER_DRAIN_PER_TICK,
   HAPPINESS_DRAIN_PER_TICK,
   ENERGY_DRAIN_PER_TICK,
+  ENERGY_RESTORE_PER_SLEEP_TICK,
   STORAGE_DEBOUNCE_MS,
   CONTEXT_MENU_FEED_ID,
 } from '@shared/constants';
@@ -186,7 +187,19 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 // ─── Stats tick ───────────────────────────────────────────────────────────────
 
 function tickStats(): void {
-  if (petState.behavior === BehaviorState.Sleeping) return;
+  if (petState.behavior === BehaviorState.Sleeping) {
+    // Restore energy while sleeping; stats don't drain
+    petState = {
+      ...petState,
+      stats: {
+        ...petState.stats,
+        energy: Math.min(100, petState.stats.energy + ENERGY_RESTORE_PER_SLEEP_TICK),
+      },
+    };
+    persistStateDebouncedWrite();
+    broadcastState();
+    return;
+  }
 
   petState = {
     ...petState,

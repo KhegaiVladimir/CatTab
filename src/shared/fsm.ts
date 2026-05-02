@@ -79,6 +79,7 @@ export function transition(state: PetState, event: FsmEvent): FsmResult {
         ...s.stats,
         hunger: Math.min(100, s.stats.hunger + 30),
         happiness: Math.min(100, s.stats.happiness + 10),
+        energy: Math.min(100, s.stats.energy + 10),
       };
       return { nextState: s, changed: true };
     }

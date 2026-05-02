@@ -8,6 +8,9 @@ export const HUNGER_DRAIN_PER_TICK = 5;
 export const HAPPINESS_DRAIN_PER_TICK = 3;
 export const ENERGY_DRAIN_PER_TICK = 4;
 
+/** Energy restored per tick while sleeping (drains at 4/tick, restores at 8/tick → full recovery in ~37 min) */
+export const ENERGY_RESTORE_PER_SLEEP_TICK = 8;
+
 /** Base movement speed in px/frame at 60fps */
 export const BASE_SPEED_PX = 2.5;
 

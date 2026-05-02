@@ -88,51 +88,18 @@ function init(): void {
     }
   });
 
-  // ── Request initial state + settings ────────────────────────────────────
-  chrome.storage.local.get(
-    ['petState', 'speedMultiplier', 'blocklist', 'petMode'] as Array<keyof StorageSchema>,
-    (items) => {
-      const storage = items as Partial<StorageSchema>;
-
-      isBlocked = isCurrentSiteBlocked(storage.blocklist ?? []);
-      if (isBlocked) {
+  const scheduleColdStartRenderFallback = (): void => {
+    // If SW doesn't reply within 1s (e.g. cold start race), render anyway so the cat
+    // isn't invisible forever. STATE_UPDATED will correct state when SW wakes.
+    setTimeout(() => {
+      if (!canRenderOnThisTab && !isBlocked) {
+        canRenderOnThisTab = true;
         applyRenderGate();
-        return;
       }
+    }, 1000);
+  };
 
-      if (storage.petState) controller.applyState(storage.petState);
-      if (storage.speedMultiplier != null) controller.applySpeedMultiplier(storage.speedMultiplier);
-      if (storage.petMode != null) controller.applyMode(storage.petMode);
-
-      // Fallback: if SW doesn't reply within 1s (e.g. cold start race), render anyway
-      // so the cat isn't invisible forever. STATE_UPDATED will correct state when SW wakes.
-      setTimeout(() => {
-        if (!canRenderOnThisTab && !isBlocked) {
-          canRenderOnThisTab = true;
-          applyRenderGate();
-        }
-      }, 1000);
-    },
-  );
-
-  // ── Live-react to settings changes (popup writes → all tabs see immediately) ──
-  chrome.storage.onChanged.addListener((changes, area) => {
-    if (area !== 'local') return;
-    if (changes.petMode?.newValue != null) {
-      controller.applyMode(changes.petMode.newValue as StorageSchema['petMode']);
-    }
-    if (changes.speedMultiplier?.newValue != null) {
-      controller.applySpeedMultiplier(changes.speedMultiplier.newValue as number);
-    }
-    if (changes.blocklist?.newValue !== undefined) {
-      isBlocked = isCurrentSiteBlocked(
-        (changes.blocklist.newValue as string[] | undefined) ?? [],
-      );
-      applyRenderGate();
-    }
-  });
-
-  // ── Cursor tracking ──────────────────────────────────────────────────────
+  // ── Cursor tracking + visibility (must run even when chrome.storage is missing) ──
 
   // Prevent the browser's native context menu (including extension items) from
   // appearing when the user right-clicks on the cat. The pet element calls
@@ -170,23 +137,82 @@ function init(): void {
     } else {
       // Re-read state from storage immediately so we don't briefly show stale
       // state while the SW wakes up and processes TabBecameActive.
-      chrome.storage.local.get(
-        ['petState', 'speedMultiplier', 'petMode'] as Array<keyof StorageSchema>,
-        (items) => {
-          const s = items as Partial<StorageSchema>;
-          if (s.petState) controller.applyState(s.petState);
-          if (s.speedMultiplier != null) controller.applySpeedMultiplier(s.speedMultiplier);
-          if (s.petMode != null) controller.applyMode(s.petMode);
-          canRenderOnThisTab = true;
-          applyRenderGate();
-        },
-      );
+      const applyVisibilityResume = (): void => {
+        canRenderOnThisTab = true;
+        applyRenderGate();
+      };
+
+      if (isChromeStorageAvailable()) {
+        chrome.storage.local.get(
+          ['petState', 'speedMultiplier', 'petMode'] as Array<keyof StorageSchema>,
+          (items) => {
+            const s = items as Partial<StorageSchema>;
+            if (s.petState) controller.applyState(s.petState);
+            if (s.speedMultiplier != null) controller.applySpeedMultiplier(s.speedMultiplier);
+            if (s.petMode != null) controller.applyMode(s.petMode);
+            applyVisibilityResume();
+          },
+        );
+      } else {
+        applyVisibilityResume();
+      }
       safeSendMessage({ type: MsgType.TabBecameActive });
     }
   });
 
+  // ── Request initial state + settings (optional API on some embedded frames) ──
+  if (isChromeStorageAvailable()) {
+    chrome.storage.local.get(
+      ['petState', 'speedMultiplier', 'blocklist', 'petMode'] as Array<keyof StorageSchema>,
+      (items) => {
+        const storage = items as Partial<StorageSchema>;
+
+        isBlocked = isCurrentSiteBlocked(storage.blocklist ?? []);
+        if (isBlocked) {
+          applyRenderGate();
+          return;
+        }
+
+        if (storage.petState) controller.applyState(storage.petState);
+        if (storage.speedMultiplier != null) controller.applySpeedMultiplier(storage.speedMultiplier);
+        if (storage.petMode != null) controller.applyMode(storage.petMode);
+
+        scheduleColdStartRenderFallback();
+      },
+    );
+
+    // Live-react to settings changes (popup writes → all tabs see immediately)
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area !== 'local') return;
+      if (changes.petMode?.newValue != null) {
+        controller.applyMode(changes.petMode.newValue as StorageSchema['petMode']);
+      }
+      if (changes.speedMultiplier?.newValue != null) {
+        controller.applySpeedMultiplier(changes.speedMultiplier.newValue as number);
+      }
+      if (changes.blocklist?.newValue !== undefined) {
+        isBlocked = isCurrentSiteBlocked(
+          (changes.blocklist.newValue as string[] | undefined) ?? [],
+        );
+        applyRenderGate();
+      }
+    });
+  } else {
+    isBlocked = false;
+    scheduleColdStartRenderFallback();
+  }
+
   // ── Notify SW this tab is active ─────────────────────────────────────────
   safeSendMessage({ type: MsgType.TabBecameActive });
+}
+
+/** Some frames (e.g. certain embedded editors / Docs subframes) omit `chrome.storage`. */
+function isChromeStorageAvailable(): boolean {
+  return (
+    typeof chrome !== 'undefined' &&
+    chrome.storage !== undefined &&
+    chrome.storage.local !== undefined
+  );
 }
 
 function isCurrentSiteBlocked(blocklist: string[]): boolean {

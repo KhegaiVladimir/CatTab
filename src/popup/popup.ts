@@ -101,7 +101,7 @@ class PopupPortrait {
 
   start(): void {
     this.lastTs = performance.now();
-    const tick = (ts: number) => {
+    const tick = (ts: number): void => {
       const dt = ts - this.lastTs;
       this.lastTs = ts;
       this.frameTimer += dt;

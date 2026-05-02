@@ -29,6 +29,7 @@ const MOUSEMOVE_THROTTLE_MS = 50; // max ~20 SW messages/sec from cursor
 
 export class PetController {
   private state: PetState = { ...DEFAULT_PET_STATE };
+  private hasReceivedFirstState = false;
   private rafId = 0;
   private speedMultiplier = 1.0;
   private mode: PetMode = 'auto';
@@ -85,7 +86,18 @@ export class PetController {
       state.behavior === BehaviorState.Sitting && this.state.behavior !== BehaviorState.Sitting;
     const enteringSleeping =
       state.behavior === BehaviorState.Sleeping && this.state.behavior !== BehaviorState.Sleeping;
-    this.state = state;
+    if (this.hasReceivedFirstState) {
+      // Preserve only locally-tracked position — the content script moves the cat
+      // every RAF tick, so the SW position is always slightly stale. Blindly
+      // overwriting it causes the cat to snap back on every STATE_UPDATED message
+      // (visible as shaking on rapid clicks).
+      // Direction IS accepted from SW — it's computed by the FSM (directionTo) and
+      // the SW is the authority for it.
+      this.state = { ...state, position: this.state.position };
+    } else {
+      this.state = state;
+      this.hasReceivedFirstState = true;
+    }
     if (enteringIdle) this.refreshIdleVariant();
     if (enteringSleeping) {
       this.tryShowBubble('sleepy_bubble.png');
@@ -132,7 +144,8 @@ export class PetController {
   }
 
   private tick(timestamp: number): void {
-    const deltaMs = this.lastTickTs === 0 ? 0 : timestamp - this.lastTickTs;
+    const rawMs = this.lastTickTs === 0 ? 0 : timestamp - this.lastTickTs;
+    const deltaMs = Math.min(rawMs, 100); // cap so tab-switch resume doesn't fast-forward timers
     this.lastTickTs = timestamp;
     const speed = BASE_SPEED_PX * this.speedMultiplier;
     const s = this.state;
@@ -287,17 +300,13 @@ export class PetController {
       this.idleElapsedMs = 0;
       return;
     }
-    // Pinned or follow mode: the cat sits idle, no autonomous wandering.
-    if (this.pinned || this.mode === 'follow') {
-      this.idleElapsedMs = 0;
-      return;
-    }
     this.idleElapsedMs += deltaMs;
     if (this.idleElapsedMs < this.idleTriggerMs) return;
 
     this.idleElapsedMs = 0;
     this.idleTriggerMs = nextIdleTriggerMs();
-    // Cat sits down first; tickSitting will send IDLE_TIMEOUT to wander after SIT_WANDER_MS.
+    // Cat always sits down after idle timeout. tickSitting handles whether it
+    // gets up again (blocked when pinned or in follow mode).
     this.sendStateChange({ type: 'SIT_TIMEOUT' });
   }
 
